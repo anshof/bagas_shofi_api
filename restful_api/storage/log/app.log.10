@@ -1,3 +1,37 @@
-[2020-04-19 19:39:49,140] {/home/alta7/Documents/bagas_shofi_api/restful_api/blueprints/__init__.py:46} WARNING-REQUEST_LOG	{"method": "GET", "code": "200 OK", "uri": "/iploc?ip=188.164.13.14&token=208c90f8a6a063", "request": null, "response": {"latlon": ["51.5085", "-0.1257"], "mycity": "London"}}
-[2020-04-19 19:41:56,122] {/home/alta7/Documents/bagas_shofi_api/restful_api/blueprints/__init__.py:46} WARNING-REQUEST_LOG	{"method": "GET", "code": "200 OK", "uri": "/iploc?ip=188.164.13.14", "request": null, "response": {"latlon": ["51.5085", "-0.1257"], "mycity": "London"}}
-[2020-04-19 19:42:11,583] {/home/alta7/Documents/bagas_shofi_api/restful_api/blueprints/__init__.py:46} WARNING-REQUEST_LOG	{"method": "GET", "code": "200 OK", "uri": "/iploc?ip=188.174.13.14", "request": null, "response": {"latlon": ["49.5910", "11.0078"], "mycity": "Erlangen"}}
+[2020-04-19 20:38:52,341] {/home/alta16/Documents/project/bagashofigithub/bagas_shofi_api/restful_api/blueprints/__init__.py:46} WARNING-REQUEST_LOG	{"method": "GET", "code": "200 OK", "uri": "/iploc?ip=175.45.184.186", "request": null, "response": {"latlon": ["-7.9797", "112.6304"], "mycity": "Malang"}}
+[2020-04-19 20:51:32,262] {/home/alta16/Documents/project/bagashofigithub/bagas_shofi_api/restful_api/blueprints/__init__.py:46} WARNING-REQUEST_LOG	{"method": "GET", "code": "200 OK", "uri": "/iploc?ip=175.45.184.186", "request": null, "response": {"latlon": ["-7.9797", "112.6304"], "mycity": "Malang"}}
+[2020-04-19 20:52:10,253] {/home/alta16/Documents/project/bagashofigithub/bagas_shofi_api/restful_api/blueprints/__init__.py:46} WARNING-REQUEST_LOG	{"method": "GET", "code": "200 OK", "uri": "/iploc?ip=175.45.184.186", "request": null, "response": {"latlon": ["-7.9797", "112.6304"], "mycity": "Malang"}}
+[2020-04-19 20:53:30,230] {/home/alta16/.local/lib/python3.6/site-packages/flask/app.py:1892} ERROR-Exception on /zomato [GET]
+Traceback (most recent call last):
+  File "/home/alta16/.local/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta16/.local/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta16/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 468, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta16/.local/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta16/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 583, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta16/Documents/project/bagashofigithub/bagas_shofi_api/restful_api/blueprints/zomato/resources.py", line 42, in get
+    id_city = response_city['location_suggestions'][0]['id']
+TypeError: 'Response' object is not subscriptable
+[2020-04-19 20:53:30,234] {/home/alta16/Documents/project/bagashofigithub/bagas_shofi_api/restful_api/blueprints/__init__.py:53} WARNING-REQUEST_LOG	{"method": "GET", "code": "500 INTERNAL SERVER ERROR", "uri": "/zomato?", "request": null, "response": {"message": "Internal Server Error"}}
+[2020-04-19 20:55:18,339] {/home/alta16/.local/lib/python3.6/site-packages/flask/app.py:1892} ERROR-Exception on /zomato [GET]
+Traceback (most recent call last):
+  File "/home/alta16/.local/lib/python3.6/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta16/.local/lib/python3.6/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta16/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 468, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta16/.local/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta16/.local/lib/python3.6/site-packages/flask_restful/__init__.py", line 583, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta16/Documents/project/bagashofigithub/bagas_shofi_api/restful_api/blueprints/zomato/resources.py", line 42, in get
+    id_city = response_city['location_suggestions'][0]['id']
+TypeError: 'Response' object is not subscriptable
+[2020-04-19 20:55:18,342] {/home/alta16/Documents/project/bagashofigithub/bagas_shofi_api/restful_api/blueprints/__init__.py:53} WARNING-REQUEST_LOG	{"method": "GET", "code": "500 INTERNAL SERVER ERROR", "uri": "/zomato?q=Jakarta", "request": null, "response": {"message": "Internal Server Error"}}
+[2020-04-19 20:57:37,946] {/home/alta16/Documents/project/bagashofigithub/bagas_shofi_api/restful_api/blueprints/__init__.py:46} WARNING-REQUEST_LOG	{"method": "GET", "code": "200 OK", "uri": "/zomato?q=Jakarta", "request": null, "response": null}
+[2020-04-19 20:58:38,454] {/home/alta16/Documents/project/bagashofigithub/bagas_shofi_api/restful_api/blueprints/__init__.py:46} WARNING-REQUEST_LOG	{"method": "GET", "code": "200 OK", "uri": "/zomato?q=Jakarta", "request": null, "response": 74}
