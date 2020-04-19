@@ -1,4 +1,4 @@
-import requests,json
+import requests,json, config
 from math import cos, asin, sqrt, pi
 from flask import Blueprint
 from blueprints import app
@@ -8,17 +8,17 @@ bp_iploc = Blueprint('iploc', __name__)
 api = Api (bp_iploc)
 
 class IpLocation(Resource):
-    ip_host = 'https://ipinfo.io/118.97.144.82'
-
+    ip_host = app.config['IPLOC_HOST']
+    token = app.config['TOKEN']
  
 
     def get(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('token', location='args', default=None)
+        parser.add_argument('ip', location='args', default=None)
         args = parser.parse_args()    
         
 
-        response = requests.get(self.ip_host, params={'token':args['token']})
+        response = requests.get(self.ip_host + '/' + args['ip'], params={'token':self.token})
 
         resp = response.json()
         point = resp['loc']
