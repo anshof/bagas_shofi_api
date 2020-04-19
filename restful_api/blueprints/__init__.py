@@ -1,4 +1,4 @@
-import json, os
+import json, os, config
 from functools import wraps
 from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
@@ -21,10 +21,10 @@ app = Flask(__name__)
 #             return fn(*args, **kwargs)
 #     return wrapper
 
-# if os.environ.get('FLASK_ENV', 'Production')=='Production': 
-#     app.config.from_object(config.ProductionConfig)
-# else:
-#     app.config.from_object(config.DevelopmentConfig)
+if os.environ.get('FLASK_ENV', 'Production')=='Production': 
+    app.config.from_object(config.ProductionConfig)
+else:
+    app.config.from_object(config.DevelopmentConfig)
 
 db =SQLAlchemy(app) 
 migrate = Migrate(app, db)
@@ -56,5 +56,8 @@ def after_request(response):
 
 from blueprints.iploc.resources import bp_iploc
 app.register_blueprint(bp_iploc, url_prefix='/iploc')
+
+from blueprints.zomato.resources import bp_zomato
+app.register_blueprint(bp_zomato, url_prefix='/zomato')
 
 # db.create_all()
