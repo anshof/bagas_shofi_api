@@ -44,7 +44,7 @@ class ZomatoApi(Resource):
 
         response_city = requests.get(self.zomato_host + '/cities', params={'q': city}, headers=self.headers)
         response_city = response_city.json()
-        print(response_city)
+        # print(response_city)
         # print('===============================')
         
         
