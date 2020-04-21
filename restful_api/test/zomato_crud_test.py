@@ -33,13 +33,10 @@ class TestZomatoCrud():
       "state_name": "",
       "state_code": ""
     }
-  ],
-  "status": "success",
-  "has_more": 0,
-  "has_total": 0,
-  "user_has_addresses": true
+  ]
+  
 },200)
-            if args[0] == app.config['ZO_HOST'] + "/search":
+            elif args[0] == app.config['ZO_HOST'] + "/search":
                 return MockResponse({
   "results_found": 26948,
   "results_start": 0,
@@ -350,7 +347,7 @@ class TestZomatoCrud():
         "has_online_delivery": 0,
         "is_delivering_now": 0,
         "store_type": "",
-        "include_bogo_offers": true,
+        "include_bogo_offers": 0,
         "deeplink": "zomato://restaurant/18560991",
         "is_table_reservation_supported": 0,
         "has_table_booking": 0,
@@ -404,7 +401,7 @@ class TestZomatoCrud():
         token = create_token()
         res = client.get(
             '/zomato',
-            query_string={"ip": "114.5.218.223"}, 
+            query_string={"ip": "114.5.218.223", "count":"1", 'q':'city'}, 
             headers={'Authorization':'Bearer ' + token}
             )
         res_json = json.loads(res.data)
