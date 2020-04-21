@@ -5,6 +5,7 @@ from flask_jwt_extended import jwt_required
 from blueprints import app, iploc, internal_required
 from math import cos, asin, sqrt, pi
 from blueprints.iploc.resources import IpLocation
+from operator import itemgetter
 
 bp_zomato = Blueprint('zomato', __name__)
 api = Api(bp_zomato)
@@ -69,12 +70,24 @@ class ZomatoApi(Resource):
         #     lat2 = float(lat)
         #     lon2 = float(lon)
 
+
             jarak = self.distance(lat_now, lon_now, lat_restaurant, lon_restaurant)
             result['distance'] = '%s km'%(jarak)
             output.append(result)
+            jauh = sorted(output, key=itemgetter('distance'))
+
         
+        # for number in range (len(output)-1):
+        #     for num in range (0, len(output)-number-1):
+        #         lower = output[num]['distance']
+        #         bigger = output[num+1]['distance']
+        #         if output[num]['distance']>output[num+1]['distance']:
+        #             lower = output[num+1]['distance']
+        #             bigger = output[num]['distance']
+                
+
         # return '%s lat : %s, lon : %s => jarak : %f kilometer' % (restoran[i]['restaurant']['name'], lat, lon, jarak)
-        return output
+        return jauh
 api.add_resource(ZomatoApi, '')
 
 
