@@ -30,7 +30,7 @@ class CreateTokenResource(Resource):
                 token=create_access_token(identity=args['client_key'], user_claims=qry)
                 return {'token':token},200
         else:
-            if args['client_key']=='internal' and args['client_secret']=='th1s1s1nt3n4lcl13nt':
+            if args['client_key']=='internal' and args['client_secret']=='rahasia':
                 qry={
                     'identifier':'alta batch 5',
                     'status':True

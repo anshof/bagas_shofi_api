@@ -8,18 +8,18 @@ from flask_jwt_extended import JWTManager, verify_jwt_in_request, get_jwt_claims
 
 app = Flask(__name__) 
 
-# jwt = JWTManager(app)
+jwt = JWTManager(app)
 
-# def internal_required(fn):
-#     @wraps(fn)
-#     def wrapper(*args, **kwargs):
-#         verify_jwt_in_request()
-#         claims = get_jwt_claims()
-#         if not claims['status']:
-#             return {'status':'FORBIDDEN', 'message':'Internal Only!'}, 403
-#         else:
-#             return fn(*args, **kwargs)
-#     return wrapper
+def internal_required(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        verify_jwt_in_request()
+        claims = get_jwt_claims()
+        if not claims['status']:
+            return {'status':'FORBIDDEN', 'message':'Internal Only!'}, 403
+        else:
+            return fn(*args, **kwargs)
+    return wrapper
 
 if os.environ.get('FLASK_ENV', 'Production')=='Production': 
     app.config.from_object(config.ProductionConfig)
@@ -60,4 +60,12 @@ app.register_blueprint(bp_iploc, url_prefix='/iploc')
 from blueprints.zomato.resources import bp_zomato
 app.register_blueprint(bp_zomato, url_prefix='/zomato')
 
-# db.create_all()
+from blueprints.auth import bp_auth
+app.register_blueprint(bp_auth, url_prefix='/auth')
+
+from blueprints.user.resources import bp_user
+app.register_blueprint(bp_user, url_prefix='/user')
+
+from blueprints.client.resources import bp_client
+app.register_blueprint(bp_client, url_prefix='/client')
+db.create_all()

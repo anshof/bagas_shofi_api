@@ -2,7 +2,7 @@ import requests, json, config
 from flask import Blueprint
 from flask_restful import Api, reqparse, Resource
 from flask_jwt_extended import jwt_required
-from blueprints import app, iploc
+from blueprints import app, iploc, internal_required
 from math import cos, asin, sqrt, pi
 from blueprints.iploc.resources import IpLocation
 
@@ -24,7 +24,7 @@ class ZomatoApi(Resource):
         a = 0.5 - cos((lat2-lat1)*p)/2 + cos(lat1*p) * cos(lat2*p) * (1-cos((lon2-lon1)*p))/2
         return 12742 * asin(sqrt(a))
 
-    # @jwt_required
+    @internal_required
     def get(self):
         IpLocation()
         hasil = IpLocation().get()
@@ -49,7 +49,7 @@ class ZomatoApi(Resource):
 
 
         id_city = response_city['location_suggestions'][0]['id']
-        response_search = requests.get(self.zomato_host + '/search', params={'entity_id': id_city, 'entity_type': args['entity_type'], 'count': args['count']}, headers=self.headers)
+        response_search = requests.get(self.zomato_host + '/search', params={'entity_id': id_city, 'entity_type': args['entity_type'], 'q': args['q'], 'count': args['count']}, headers=self.headers)
 
         restorans = response_search.json()
         restorans = restorans['restaurants']
@@ -59,14 +59,18 @@ class ZomatoApi(Resource):
             result = {}
 
             result['restaurant_name'] = restoran['restaurant']['name']
-            result['alamat'] = restoran['restaurant']['location']['address']
+            result['rating'] = restoran['restaurant']['user_rating']['aggregate_rating'] +' '+ restoran['restaurant']['user_rating']['rating_text']
+            result['open_hour'] = restoran['restaurant']['timings']
+            result['cuisines'] = restoran['restaurant']['cuisines']
+            result['average_cost_for_two'] = restoran['restaurant']['currency']+str(restoran['restaurant']['average_cost_for_two'])
+            result['address'] = restoran['restaurant']['location']['address']
             lat_restaurant = float(restoran['restaurant']['location']['latitude'])
             lon_restaurant = float(restoran['restaurant']['location']['longitude'])
         #     lat2 = float(lat)
         #     lon2 = float(lon)
 
             jarak = self.distance(lat_now, lon_now, lat_restaurant, lon_restaurant)
-            result['Jarak'] = '%s km'%(jarak)
+            result['distance'] = '%s km'%(jarak)
             output.append(result)
         
         # return '%s lat : %s, lon : %s => jarak : %f kilometer' % (restoran[i]['restaurant']['name'], lat, lon, jarak)
