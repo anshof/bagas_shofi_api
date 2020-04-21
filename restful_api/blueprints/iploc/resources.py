@@ -20,13 +20,10 @@ class IpLocation(Resource):
 
         response = requests.get(self.ip_host + '/' + args['ip'], params={'token':self.token})
 
-        resp = response.json()
-        point = resp['loc']
-        mycity = resp['city']
-        listloc = list(point.split(','))
+        return response.json()
+       
 
-        return {'latlon' : listloc, 
-                'mycity' : mycity}
+        
 
 api.add_resource(IpLocation, '')
 

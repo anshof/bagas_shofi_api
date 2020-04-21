@@ -29,9 +29,12 @@ class ZomatoApi(Resource):
     def get(self):
         IpLocation()
         hasil = IpLocation().get()
-        lat_now = float(hasil['latlon'][0])
-        lon_now = float(hasil['latlon'][1])
-        city = hasil['mycity']
+        # print(hasil)
+        latlon = hasil['loc']
+        list_loc = list(latlon.split(','))
+        lat_now = float(list_loc[0])
+        lon_now = float(list_loc[1])
+        city = hasil['city']
         parser = reqparse.RequestParser()
         # parser.add_argument('entity_id', type=int, location='args', default=None)
         parser.add_argument('entity_type', location='args', default='city')
@@ -41,7 +44,7 @@ class ZomatoApi(Resource):
 
         response_city = requests.get(self.zomato_host + '/cities', params={'q': city}, headers=self.headers)
         response_city = response_city.json()
-        # print(response_city)
+        print(response_city)
         # print('===============================')
         
         
@@ -53,22 +56,29 @@ class ZomatoApi(Resource):
         response_search = requests.get(self.zomato_host + '/search', params={'entity_id': id_city, 'entity_type': args['entity_type'], 'q': args['q'], 'count': args['count']}, headers=self.headers)
 
         restorans = response_search.json()
+        # print(restorans)
         restorans = restorans['restaurants']
+
+
+        if len(restorans) == 0:
+            return "Kata kunci tidak ada"
         
         output = []
         for restoran in restorans:
             result = {}
+        
 
             result['restaurant_name'] = restoran['restaurant']['name']
-            result['rating'] = restoran['restaurant']['user_rating']['aggregate_rating'] +' '+ restoran['restaurant']['user_rating']['rating_text']
+            result['rating'] = restoran['restaurant']['user_rating']['aggregate_rating']
+            result['comment']=restoran['restaurant']['user_rating']['rating_text']
             result['open_hour'] = restoran['restaurant']['timings']
             result['cuisines'] = restoran['restaurant']['cuisines']
-            result['average_cost_for_two'] = restoran['restaurant']['currency']+str(restoran['restaurant']['average_cost_for_two'])
+            result['currency'] = restoran['restaurant']['currency']
+            result['cost_average_2_person'] = restoran['restaurant']['average_cost_for_two']
             result['address'] = restoran['restaurant']['location']['address']
             lat_restaurant = float(restoran['restaurant']['location']['latitude'])
             lon_restaurant = float(restoran['restaurant']['location']['longitude'])
-        #     lat2 = float(lat)
-        #     lon2 = float(lon)
+        
 
 
             jarak = self.distance(lat_now, lon_now, lat_restaurant, lon_restaurant)
@@ -77,16 +87,7 @@ class ZomatoApi(Resource):
             jauh = sorted(output, key=itemgetter('distance'))
 
         
-        # for number in range (len(output)-1):
-        #     for num in range (0, len(output)-number-1):
-        #         lower = output[num]['distance']
-        #         bigger = output[num+1]['distance']
-        #         if output[num]['distance']>output[num+1]['distance']:
-        #             lower = output[num+1]['distance']
-        #             bigger = output[num]['distance']
-                
-
-        # return '%s lat : %s, lon : %s => jarak : %f kilometer' % (restoran[i]['restaurant']['name'], lat, lon, jarak)
+       
         return jauh
 api.add_resource(ZomatoApi, '')
 
