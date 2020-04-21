@@ -16,13 +16,16 @@ def internal_required(fn):
         verify_jwt_in_request()
         claims = get_jwt_claims()
         if not claims['status']:
-            return {'status':'FORBIDDEN', 'message':'Internal Only!'}, 403
+            return {'status': 'FORBIDDEN', 'message': 'Internal Only!'}, 403
         else:
             return fn(*args, **kwargs)
     return wrapper
 
-if os.environ.get('FLASK_ENV', 'Production')=='Production': 
+flask_env = os.environ.get('FLASK_ENV', 'Production')
+if flask_env == "Production":
     app.config.from_object(config.ProductionConfig)
+elif flask_env == "Testing":
+    app.config.from_object(config.TestingConfig)
 else:
     app.config.from_object(config.DevelopmentConfig)
 

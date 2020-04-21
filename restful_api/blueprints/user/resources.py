@@ -27,7 +27,7 @@ class UserResource(Resource):
         parser.add_argument('age', location='json', required=True)
         parser.add_argument('sex', location='json', required=True)
         parser.add_argument('client_id', location='json', required=True)
-        parser.add_argument('password', location='json', required=True)
+        # parser.add_argument('password', location='json', required=True)
 
         args = parser.parse_args()
 

@@ -3,6 +3,9 @@ import logging, sys
 from logging.handlers import RotatingFileHandler
 from blueprints import app, manager
 import config 
+from werkzeug.contrib.cache import SimpleCache
+
+cache = SimpleCache()
 
 api = Api(app, catch_all_404s=True)
 
