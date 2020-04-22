@@ -32,7 +32,7 @@ class CreateTokenResource(Resource):
             return {'token': token}, 200        
             # return marshal(qry_client, Clients.response_fields), 200, {'Content-Type': 'application/json'}
         else:
-            return {'status': 'UNAUTHORIZED', 'message':'invalid key or secret'}, 401
+            return {'status': 'UNAUTHORIZED', 'message':'invalid key or secret'}, 403
 
     # @jwt_required
     # def post(self):
