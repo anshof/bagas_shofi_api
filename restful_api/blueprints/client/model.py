@@ -7,7 +7,7 @@ from datetime import datetime
 class Clients(db.Model):
     __tablename__ = "client"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    client_key = db.Column(db.String(30), nullable=False)
+    client_key = db.Column(db.String(30), nullable=False, unique=True)
     client_secret = db.Column(db.String(255 ))
     salt = db.Column(db.String(255))
     status = db.Column(db.String(30))
